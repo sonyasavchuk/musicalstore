@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MusicalStore.Models.Dtos.Groups.GroupWriteDto
+
+@{
+    ViewData["Title"] = "Edit Group";
+    var typeItems = new SelectList(Model.Types);
+}
+
+<h1>Edit Group</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GroupName" class="control-label"></label>
+                <input asp-for="GroupName" class="form-control" />
+                <span asp-validation-for="GroupName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Types" class="control-label"></label>
+                <select asp-for="Types" multiple class="form-control types-select" asp-items="@typeItems"></select>
+                <span asp-validation-for="GroupName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

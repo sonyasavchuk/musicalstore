@@ -1,0 +1,100 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<MusicalStore.Models.Dtos.Instruments.InstrumentDto>
+
+@{
+    ViewData["Title"] = "Instruments";
+}
+
+<h1>Instruments</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Instrument</a>
+</p>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Import</h5>
+        <form enctype="multipart/form-data" method="post" asp-action="ImportSpreadsheet" class="form-group d-flex mx-1 my-2 flex-row-reverse">
+            <input id="importXlsxButton" type="submit" value="Import from .xlsx" class="btn btn-sm btn-outline-primary w-25"/>
+            <input id="importXlsxInput" name="spreadsheetFile" type="file" class="form-control"/>
+        </form>
+        <form enctype="multipart/form-data" method="post" asp-action="ImportDocument" class="form-group d-flex mx-1 my-2 flex-row-reverse">
+            <input id="importDocxButton" type="submit" value="Import from .docx" class="btn btn-sm btn-outline-primary w-25"/>
+            <input id="importDocxInput" name="documentFile" type="file" class="form-control"/>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Export</h5>
+        <form method="get" asp-action="ExportSpreadsheet" class="form-group mx-1 my-2">
+            <a asp-controller="Instruments" asp-action="ExportSpreadsheet" class="btn btn-outline-primary mx-1 my-2">
+                Export All as .xlsx
+            </a>
+            <input id="exportXlsxButton" type="submit" value="Export Selected as .xlsx" class="btn btn-outline-primary"/>
+            <select id="exportXlsxSelect" name="selectedInstrumentIds" multiple class="form-control search-select" asp-items="@ViewContext.ViewBag.SelectableInstruments"></select>
+        </form>
+        <hr/>
+        <form method="get" asp-action="ExportDocument" class="form-group mx-1 my-2">
+            <a asp-controller="Instruments" asp-action="ExportDocument" class="btn btn-outline-primary mx-1 my-2">
+                Export All as .docx
+            </a>
+            <input id="exportDocxButton" type="submit" value="Export Selected as .docx" class="btn btn-outline-primary"/>
+            <select id="exportDocxSelect" name="selectedInstrumentIds" multiple class="form-control search-select" asp-items="@ViewContext.ViewBag.SelectableInstruments"></select>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InstrumentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManufacturerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManufactoringCountryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstrumentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufacturerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactoringCountryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

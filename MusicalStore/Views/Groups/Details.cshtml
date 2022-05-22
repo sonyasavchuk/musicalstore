@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MusicalStore.Models.Dtos.Groups.GroupDto
+
+@{
+    ViewData["Title"] = "Group Details";
+}
+
+<h1>Group Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>

@@ -1,0 +1,14 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+.vs/
+node_modules/
+Maets/Properties/launchSettings.json
+Maets/Resources/
+Maets/wwwroot/css/vendor.min.css
+Maets/wwwroot/js/vendor.min.js
+Maets/wwwroot/public/
+.DS_Store

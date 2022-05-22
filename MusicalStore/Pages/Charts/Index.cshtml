@@ -1,0 +1,105 @@
+@page
+@using ChartJSCore.Helpers
+@using ChartJSCore.Models
+@using ColorMine.ColorSpaces
+@model MusicalStore.Pages.Charts.ChartsPageModel
+
+@{
+    var rng = new Random();
+
+    Func<ChartColor> colorGenerator = () => {
+        var hsl = new Hsl
+        {
+            H = rng.Next(0, 150),
+            S = (double)rng.Next(42, 98) / 100,
+            L = (double)rng.Next(40, 90) / 100,
+        };
+        var rgb = hsl.ToRgb();
+        return ChartColor.FromRgb((byte)rgb.R, (byte)rgb.G, (byte)rgb.B);
+    };
+
+    var materialsChart = new Chart
+    {
+        Type = Enums.ChartType.Pie,
+        Data = new Data
+        {
+            Labels = Model.MaterialInfos
+                .Select(x => x.MaterialName)
+                .ToList(),
+            Datasets = new List<Dataset>
+            {
+                new PieDataset()
+                {
+                    Label = "Materials usage chart",
+                    Data = Model.MaterialInfos
+                        .Select(x => new double?(x.InstrumentsCount))
+                        .ToList(),
+                    HoverOffset = 4,
+                    BackgroundColor = Model.MaterialInfos
+                        .Select(_ => colorGenerator())
+                        .ToList(),
+                    BorderColor = new List<ChartColor>
+                    {
+                        ChartColor.FromHexString("#839496")
+                    },
+                }
+            }
+        }
+    };
+    
+    var manufacturersChart = new Chart
+    {
+        Type = Enums.ChartType.HorizontalBar,
+        Data = new Data
+        {
+            Labels = Model.ManufacturerInfos
+                .Select(x => x.ManufacturerName)
+                .ToList(),
+            Datasets = new List<Dataset>
+            {
+                new BarDataset
+                {
+                    Label = "Average instrument price",
+                    Data = Model.ManufacturerInfos
+                        .Select(x => x.AverageInstrumentPrice)
+                        .Select(x => x is null ? null : new double?(decimal.ToDouble(x.Value)))
+                        .ToList(),
+                    BackgroundColor = new List<ChartColor>
+                    {
+                        colorGenerator()
+                    },
+                    BorderColor = new List<ChartColor>
+                    {
+                        ChartColor.FromHexString("#839496")
+                    },
+                },
+            }
+        }
+    };
+}
+
+<h1>Materials usage</h1>
+<div class="w-100 d-flex justify-content-center">
+    <div style="max-width: 500px; width: 500px">
+        <canvas id="materialschart"></canvas>
+    </div>
+</div>
+
+<br/>
+<hr/>
+<br/>
+
+<h1>Average instrument price</h1>
+<div class="w-100 d-flex justify-content-center">
+    <div style="max-width: 80vw; min-width: 500px">
+        <canvas id="manufacturerschart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        @Html.Raw(materialsChart.CreateChartCode("materialschart"))
+        @Html.Raw(manufacturersChart.CreateChartCode("manufacturerschart"))
+    </script>
+}

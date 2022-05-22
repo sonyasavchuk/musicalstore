@@ -1,0 +1,53 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MusicalStore.Models.Dtos.Instruments.InstrumentWriteDto
+
+@{
+    ViewData["Title"] = "Edit Instrument";
+}
+
+<h1>Edit Instrument</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstrumentTypeId" class="control-label"></label>
+                <select asp-for="InstrumentTypeId" class ="form-control" asp-items="ViewBag.Types"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufacturerId" class="control-label"></label>
+                <select asp-for="ManufacturerId" class ="form-control" asp-items="ViewBag.Manufacturers"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufactoringCountryId" class="control-label"></label>
+                <select asp-for="ManufactoringCountryId" class ="form-control" asp-items="ViewBag.Countries"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Materials" class="control-label"></label>
+                <select asp-for="Materials" multiple class ="form-control materials-select" asp-items="ViewBag.Materials"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

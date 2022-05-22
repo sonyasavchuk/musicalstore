@@ -1,0 +1,59 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MusicalStore.Models.Dtos.Instruments.InstrumentDto
+
+@{
+    ViewData["Title"] = "Instrument Details";
+}
+
+<h1>Instrument Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InstrumentType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InstrumentType)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ManufacturerName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ManufacturerName)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ManufactoringCountryName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ManufactoringCountryName)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Materials)
+        </dt>
+        <dd class = "col-sm-10">
+            @(string.Join(", ", Model.Materials))
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
